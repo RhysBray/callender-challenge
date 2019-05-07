@@ -1,6 +1,8 @@
 @import "../../global.scss";
 
 .h1 {
+  text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000,
+    1.5px 1.5px 0 #000;
   z-index: 2;
   background-color: $t-color;
   width: 100%;
@@ -8,5 +10,5 @@
   border-bottom: black solid 2pt;
   position: fixed;
   @extend %flex-centered;
-  font-size: 30pt;
+  font-size: 35pt;
 }

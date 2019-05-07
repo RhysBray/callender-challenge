@@ -3,16 +3,26 @@ import { ICalendarEvents } from "../../reducers/calendarReducer";
 import * as React from "react";
 
 export interface IProps {
-  // event: IItems;
   event: ICalendarEvents;
 }
 
-export interface IState {}
+export interface IState {
+  isSelected: boolean;
+}
 
 class EventCard extends React.Component<IProps, IState> {
+  public state = { isSelected: false };
   public render() {
+    const handleClick = () => {
+      this.setState({ isSelected: !this.state.isSelected });
+    };
+    let selected = "";
+    this.state.isSelected ? (selected = styles.selected) : (selected = "");
     return (
-      <section className={styles["event-card"]}>
+      <section
+        className={`${styles["event-card"]} ${selected}`}
+        onClick={handleClick}
+      >
         <h2 className={styles.title}>
           {this.props.event.organizer.displayName}
         </h2>

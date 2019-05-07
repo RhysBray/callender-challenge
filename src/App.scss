@@ -9,11 +9,11 @@
 
 main {
   position: absolute;
-  top: 17.5vh;
-  min-height: 82.5vh;
+  top: 15vh;
+  min-height: 85vh;
   width: 100%;
   background-color: $s-color;
   @extend %flex-centered;
   flex-wrap: wrap;
-  padding: $base-space;
+  padding: $base-space * 2;
 }

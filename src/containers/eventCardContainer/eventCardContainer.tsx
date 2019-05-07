@@ -26,6 +26,7 @@ class EventCardContainer extends React.Component<
   public componentDidMount = () => {
     this.props.fetchCalendar();
   };
+  //taken from toptrumps to get working
   public componentDidUpdate(prevProps: IOwnProps & IStateProps) {
     if (this.props !== prevProps) {
       this.setState({
