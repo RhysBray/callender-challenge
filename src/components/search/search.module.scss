@@ -1,0 +1,17 @@
+@import "../../global.scss";
+
+.search-container {
+  padding-left: $base-space * 2;
+  .label {
+    padding-right: $base-space;
+    font-size: 13pt;
+  }
+  .search-box {
+    padding-left: $base-space;
+    height: 1.5em;
+    width: 15vw;
+    font-size: 13pt;
+    border: black solid 1pt;
+    color: black;
+  }
+}

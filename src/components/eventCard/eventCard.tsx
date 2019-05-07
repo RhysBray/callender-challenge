@@ -1,8 +1,11 @@
 import styles from "./eventCard.module.scss";
-
+import { ICalendarEvents } from "../../reducers/calendarReducer";
 import * as React from "react";
 
-export interface IProps {}
+export interface IProps {
+  // event: IItems;
+  event: ICalendarEvents;
+}
 
 export interface IState {}
 
@@ -10,16 +13,18 @@ class EventCard extends React.Component<IProps, IState> {
   public render() {
     return (
       <section className={styles["event-card"]}>
-        <h2 className={styles.title}>Event Title</h2>
+        <h2 className={styles.title}>
+          {this.props.event.organizer.displayName}
+        </h2>
         <article className={styles.description}>
-          Description: words words words words words words words words words
-          words words words words words words words words words words words
-          words words words words words words words words words words words
-          words words words words words words words words words words words
-          words words words words words words words words words words words
-          words words words words words words words words words words
+          {this.props.event.summary}
         </article>
-        <p className={styles.dates}>Dates: start to end</p>
+        <p className={styles.dates}>
+          {"From: " +
+            this.props.event.start.date +
+            " to: " +
+            this.props.event.end.date}
+        </p>
       </section>
     );
   }

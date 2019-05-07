@@ -2,54 +2,57 @@ import { ThunkAction } from "redux-thunk";
 
 // ICalendarEvents interface
 export interface ICalendarEvents {
-  kind: string;
-  etag: string;
+  //   kind?: string;
+  //   etag?: string;
+  //   summary?: string;
+  //   description?: string;
+  //   updated?: Date;
+  //   timeZone?: string;
+  //   accessRole?: string;
+  //   defaultReminders?: object[];
+  //   nextSyncToken?: string;
+  //   items: IItems;
+  // }
+
+  // export interface IItems {
+  kind?: string;
+  etag?: string;
+  id?: string;
+  status?: string;
+  htmlLink?: string;
+  created?: Date;
+  updated?: Date;
   summary: string;
-  description: string;
-  updated: Date;
-  timeZone: string;
-  accessRole: string;
-  defaultReminders: object[];
-  nextSyncToken: string;
-  items: [
-    {
-      kind: string;
-      etag: string;
-      id: string;
-      status: string;
-      htmlLink: string;
-      created: Date;
-      updated: Date;
-      summary: string;
-      creator: {
-        email: string;
-      };
-      organizer: {
-        email: string;
-        displayName: string;
-        self: true;
-      };
-      start: {
-        date: Date;
-      };
-      end: {
-        date: Date;
-      };
-      transparency: string;
-      iCalUID: string;
-      sequence: number;
-      extendedPropertie: {
-        private: {
-          everyoneDeclinedDismissed: string;
-        };
-      };
-    }
-  ];
+  creator?: {
+    email: string;
+  };
+  organizer: IOrganizer;
+  start: {
+    date: Date;
+  };
+  end: {
+    date: Date;
+  };
+  transparency?: string;
+  iCalUID?: string;
+  sequence?: number;
+  extendedPropertie?: {
+    private: {
+      everyoneDeclinedDismissed: string;
+    };
+  };
+}
+
+export interface IOrganizer {
+  email?: string;
+  displayName: string;
+  self?: true;
 }
 // action types
 export const FETCH_CALENDAR_EVENTS = "FETCH_CALENDAR_EVENTS";
 export const FETCH_CALENDAR_EVENTS_SUCCESS = "FETCH_CALENDAR_EVENTS_SUCCESS";
 export const FETCH_CALENDAR_EVENTS_FAILURE = "FETCH_CALENDAR_EVENTS_FAILURE";
+export const SEARCH_TEXT = "SEARCH_TEXT";
 
 // action creators
 export const getCalendarEvents = (): IGetCalendarEventsAction => ({
@@ -66,6 +69,10 @@ export const getCalendarEventsFailure = (
 ): IGetCalendarEventsFailureAction => ({
   type: FETCH_CALENDAR_EVENTS_FAILURE,
   error
+});
+export const onSearch = (searchText: string) => ({
+  type: SEARCH_TEXT,
+  searchText
 });
 
 type ThunkResult<R> = ThunkAction<
@@ -102,10 +109,15 @@ export interface IGetCalendarEventsFailureAction {
   type: typeof FETCH_CALENDAR_EVENTS_FAILURE;
   error: Error;
 }
+export interface IOnSearch {
+  type: typeof SEARCH_TEXT;
+  searchText: string;
+}
 
 // combining action creators
 
 type ICalendarEventsActions =
+  | IOnSearch
   | IGetCalendarEventsAction
   | IGetCalendarEventsSuccessAction
   | IGetCalendarEventsFailureAction;
@@ -114,16 +126,21 @@ export interface ICalendarState {
   calendarEvents: ICalendarEvents[];
   error: null | Error;
   loading: boolean;
+  searchText: string;
 }
 
 // reducer with initial state
 const initialState: ICalendarState = {
   calendarEvents: [],
   error: null,
-  loading: false
+  loading: false,
+  searchText: ""
 };
 
-const bookReducer = (state = initialState, action: ICalendarEventsActions) => {
+const calendarReducer = (
+  state = initialState,
+  action: ICalendarEventsActions
+) => {
   switch (action.type) {
     case FETCH_CALENDAR_EVENTS:
       return { ...state, loading: true, error: null };
@@ -136,9 +153,11 @@ const bookReducer = (state = initialState, action: ICalendarEventsActions) => {
       };
     case FETCH_CALENDAR_EVENTS_FAILURE:
       return { ...state, loading: false, error: action.error };
+    case SEARCH_TEXT:
+      return { ...state, searchText: action.searchText };
     default:
       return state;
   }
 };
 
-export default bookReducer;
+export default calendarReducer;

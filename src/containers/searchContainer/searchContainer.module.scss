@@ -1,0 +1,13 @@
+@import "../../global.scss";
+
+.search-bar {
+  position: absolute;
+  top: 10vh;
+  z-index: 1;
+  width: 100%;
+  background-color: $t-color;
+  border-bottom: solid black 2pt;
+  height: 7.5vh;
+  @extend %flex-centered;
+  justify-content: flex-start;
+}

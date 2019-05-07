@@ -8,10 +8,11 @@
 }
 
 main {
-  position: fixed;
-  top: 10vh;
-  width: 100vw;
-  min-height: 90vh;
+  position: absolute;
+  top: 17.5vh;
+  width: 100%;
   background-color: $s-color;
   @extend %flex-centered;
+  flex-wrap: wrap;
+  padding: $base-space;
 }

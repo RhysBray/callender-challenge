@@ -4,6 +4,7 @@ import store from "./store";
 import "./App.scss";
 import HeaderContainer from "./containers/headerContainer";
 import EventCardContainer from "./containers/eventCardContainer";
+import SearchContainer from "./containers/searchContainer";
 
 class App extends Component {
   public render() {
@@ -12,6 +13,7 @@ class App extends Component {
         <header>
           <HeaderContainer />
         </header>
+        <SearchContainer />
         <main className="main">
           <EventCardContainer />
         </main>
