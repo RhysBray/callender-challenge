@@ -14,19 +14,38 @@ export interface IStateProps {
   searchText: string;
 }
 
-export interface IState {}
+export interface IState {
+  filteredList: ICalendarEvents[];
+}
 
 class EventCardContainer extends React.Component<
   IOwnProps & IStateProps,
   IState
 > {
+  public state = { searchText: "", filteredList: [] };
   public componentDidMount = () => {
     this.props.fetchCalendar();
+  };
+  public componentDidUpdate(prevProps: IOwnProps & IStateProps) {
+    if (this.props !== prevProps) {
+      this.setState({
+        filteredList: this.props.calendarEvents.filter(this.filterEvents)
+      });
+    }
+  }
+  public filterEvents = (event: ICalendarEvents) => {
+    const ar = Object.values(event).filter(str => {
+      if (typeof str === "string") {
+        return str.toLowerCase().includes(this.props.searchText.toLowerCase());
+      }
+      return false;
+    });
+    return ar.length > 0 ? true : false;
   };
   public render() {
     return (
       <>
-        {this.props.calendarEvents.map((event, index) => (
+        {this.state.filteredList.map((event, index) => (
           <EventCard key={index} event={event} />
         ))}
       </>

@@ -10,6 +10,7 @@
 main {
   position: absolute;
   top: 17.5vh;
+  min-height: 82.5vh;
   width: 100%;
   background-color: $s-color;
   @extend %flex-centered;
