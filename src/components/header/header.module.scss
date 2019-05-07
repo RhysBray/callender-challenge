@@ -1,0 +1,11 @@
+@import "../../global.scss";
+
+.h1 {
+  background-color: $t-color;
+  width: 100vw;
+  height: 10vh;
+  border-bottom: black solid 2pt;
+  position: fixed;
+  @extend %flex-centered;
+  font-size: 30pt;
+}

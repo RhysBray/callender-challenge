@@ -1,0 +1,15 @@
+//variables
+$p-color: rgb(102, 0, 185);
+$s-color: rgb(0, 132, 255);
+$t-color: rgb(0, 67, 192);
+
+$base-space: 5px;
+
+$text-p-color: white;
+
+//inheritance
+%flex-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

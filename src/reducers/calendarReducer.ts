@@ -1,8 +1,51 @@
 import { ThunkAction } from "redux-thunk";
 
 // ICalendarEvents interface
-export interface ICalendarEvents {}
-
+export interface ICalendarEvents {
+  kind: string;
+  etag: string;
+  summary: string;
+  description: string;
+  updated: Date;
+  timeZone: string;
+  accessRole: string;
+  defaultReminders: object[];
+  nextSyncToken: string;
+  items: [
+    {
+      kind: string;
+      etag: string;
+      id: string;
+      status: string;
+      htmlLink: string;
+      created: Date;
+      updated: Date;
+      summary: string;
+      creator: {
+        email: string;
+      };
+      organizer: {
+        email: string;
+        displayName: string;
+        self: true;
+      };
+      start: {
+        date: Date;
+      };
+      end: {
+        date: Date;
+      };
+      transparency: string;
+      iCalUID: string;
+      sequence: number;
+      extendedPropertie: {
+        private: {
+          everyoneDeclinedDismissed: string;
+        };
+      };
+    }
+  ];
+}
 // action types
 export const FETCH_CALENDAR_EVENTS = "FETCH_CALENDAR_EVENTS";
 export const FETCH_CALENDAR_EVENTS_SUCCESS = "FETCH_CALENDAR_EVENTS_SUCCESS";
@@ -31,7 +74,7 @@ type ThunkResult<R> = ThunkAction<
   null,
   ICalendarEventsActions
 >;
-
+// https://www.googleapis.com/calendar/v3/calendars/nology.io_5smheaincm2skd1tcmvv7m37d8@group.calendar.google.com/events?maxResults=20&key=AIzaSyCHZijg8vL_s_cSjdz3Pc-mOz4aswss9WU
 export const fetchCalendar = (): ThunkResult<void> => {
   const calendarId =
     "nology.io_5smheaincm2skd1tcmvv7m37d8@group.calendar.google.com";

@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import store from "./store";
-import "./App.css";
+import "./App.scss";
+import HeaderContainer from "./containers/headerContainer";
+import EventCardContainer from "./containers/eventCardContainer";
 
 class App extends Component {
   public render() {
     return (
       <Provider store={store}>
-        <div className="App">
-          <header className="App-header">
-            <h1>My Calendar</h1>
-          </header>
-        </div>
+        <header>
+          <HeaderContainer />
+        </header>
+        <main className="main">
+          <EventCardContainer />
+        </main>
       </Provider>
     );
   }
