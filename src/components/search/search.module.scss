@@ -2,16 +2,26 @@
 
 .search-container {
   padding-left: $base-space * 2;
+  @extend %flex-centered;
+  width: 100%;
+  justify-content: space-between;
   .label {
     padding-right: $base-space;
+    padding-left: $base-space;
     font-size: 13pt;
   }
-  .search-box {
+  .search-box,
+  .date-picker {
     padding-left: $base-space;
+    margin-right: $base-space;
     height: 1.5em;
     width: 15vw;
     font-size: 13pt;
     border: black solid 1pt;
     color: black;
+    background-color: rgb(181, 225, 255);
+    &:hover {
+      background-color: white;
+    }
   }
 }

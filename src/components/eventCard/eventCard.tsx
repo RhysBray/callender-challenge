@@ -8,34 +8,51 @@ export interface IProps {
 
 export interface IState {
   isSelected: boolean;
+  isHidden: boolean;
 }
 
 class EventCard extends React.Component<IProps, IState> {
-  public state = { isSelected: false };
+  public state = { isSelected: false, isHidden: true };
   public render() {
-    const handleClick = () => {
+    const selectAndUnselect = () => {
       this.setState({ isSelected: !this.state.isSelected });
     };
-    let selected = "";
-    this.state.isSelected ? (selected = styles.selected) : (selected = "");
+    const ShowMoreOrLess = () => {
+      this.setState({ isHidden: !this.state.isHidden });
+    };
+    const selected = this.state.isSelected ? styles.selected : "";
+    const hidden = this.state.isHidden ? styles.hidden : "";
+    const larger = this.state.isHidden ? styles.larger : styles.title;
+    const dateStart = this.props.event.start.date
+      ? this.props.event.start.date
+      : this.props.event.start.dateTime
+      ? this.props.event.start.dateTime.substring(2, 10)
+      : "No dates to show";
+
+    const dateEnd = this.props.event.end.date
+      ? this.props.event.end.date
+      : this.props.event.end.dateTime
+      ? this.props.event.end.dateTime.substring(2, 10)
+      : "No dates to show";
+    console.log(dateStart);
     return (
-      <section
-        className={`${styles["event-card"]} ${selected}`}
-        onClick={handleClick}
-      >
-        <h2 className={styles.title}>
-          {this.props.event.organizer.displayName}
-        </h2>
-        <article className={styles.description}>
-          {this.props.event.summary}
-        </article>
-        <p className={styles.dates}>
-          {"From: " +
-            this.props.event.start.date +
-            " to: " +
-            this.props.event.end.date}
-        </p>
-      </section>
+      <>
+        <section className={styles["event-card"]}>
+          <div
+            className={`${styles["event-selector"]}  ${selected}`}
+            onClick={selectAndUnselect}
+          />
+          <article className={styles.contents} onClick={ShowMoreOrLess}>
+            <h2 className={larger}>{this.props.event.organizer.displayName}</h2>
+            <article className={`${styles.description} ${hidden}`}>
+              {this.props.event.summary}
+            </article>
+            <p className={`${styles.dates} ${hidden}`}>
+              {dateStart + " to " + dateEnd}
+            </p>
+          </article>
+        </section>
+      </>
     );
   }
 }

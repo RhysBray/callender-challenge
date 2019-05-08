@@ -28,10 +28,12 @@ export interface ICalendarEvents {
   };
   organizer: IOrganizer;
   start: {
-    date: Date;
+    date?: string;
+    dateTime?: string;
   };
   end: {
-    date: Date;
+    date?: string;
+    dateTime?: string;
   };
   transparency?: string;
   iCalUID?: string;
@@ -53,6 +55,7 @@ export const FETCH_CALENDAR_EVENTS = "FETCH_CALENDAR_EVENTS";
 export const FETCH_CALENDAR_EVENTS_SUCCESS = "FETCH_CALENDAR_EVENTS_SUCCESS";
 export const FETCH_CALENDAR_EVENTS_FAILURE = "FETCH_CALENDAR_EVENTS_FAILURE";
 export const SEARCH_TEXT = "SEARCH_TEXT";
+export const SET_FILTER_DATES = "SET_FILTER_DATES";
 
 // action creators
 export const getCalendarEvents = (): IGetCalendarEventsAction => ({
@@ -70,9 +73,17 @@ export const getCalendarEventsFailure = (
   type: FETCH_CALENDAR_EVENTS_FAILURE,
   error
 });
-export const onSearch = (searchText: string) => ({
+export const onSearch = (searchText: string): IOnSearch => ({
   type: SEARCH_TEXT,
   searchText
+});
+export const onDateSelect = (
+  startDate: string,
+  endDate: string
+): IOnDateSelect => ({
+  type: SET_FILTER_DATES,
+  startDate,
+  endDate
 });
 
 type ThunkResult<R> = ThunkAction<
@@ -113,10 +124,16 @@ export interface IOnSearch {
   type: typeof SEARCH_TEXT;
   searchText: string;
 }
+export interface IOnDateSelect {
+  type: typeof SET_FILTER_DATES;
+  startDate: string;
+  endDate: string;
+}
 
 // combining action creators
 
 type ICalendarEventsActions =
+  | IOnDateSelect
   | IOnSearch
   | IGetCalendarEventsAction
   | IGetCalendarEventsSuccessAction
@@ -127,6 +144,8 @@ export interface ICalendarState {
   error: null | Error;
   loading: boolean;
   searchText: string;
+  startDate: string;
+  endDate: string;
 }
 
 // reducer with initial state
@@ -134,7 +153,9 @@ const initialState: ICalendarState = {
   calendarEvents: [],
   error: null,
   loading: false,
-  searchText: ""
+  searchText: "",
+  startDate: "",
+  endDate: ""
 };
 
 const calendarReducer = (
@@ -155,6 +176,12 @@ const calendarReducer = (
       return { ...state, loading: false, error: action.error };
     case SEARCH_TEXT:
       return { ...state, searchText: action.searchText };
+    case SET_FILTER_DATES:
+      return {
+        ...state,
+        startDate: action.startDate,
+        endDate: action.endDate
+      };
     default:
       return state;
   }

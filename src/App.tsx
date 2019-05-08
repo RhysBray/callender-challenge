@@ -10,6 +10,7 @@ class App extends Component {
   public render() {
     return (
       <Provider store={store}>
+        <div className="fixed-background" />
         <header>
           <HeaderContainer />
         </header>

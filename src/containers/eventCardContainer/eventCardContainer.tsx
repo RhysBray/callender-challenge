@@ -15,6 +15,7 @@ export interface IStateProps {
 }
 
 export interface IState {
+  //*
   filteredList: ICalendarEvents[];
 }
 
@@ -34,6 +35,7 @@ class EventCardContainer extends React.Component<
       });
     }
   }
+  //*
   public filterEvents = (event: ICalendarEvents) => {
     const ar = Object.values(event).filter(str => {
       if (typeof str === "string") {
